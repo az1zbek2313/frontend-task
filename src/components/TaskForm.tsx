@@ -1,20 +1,30 @@
 import React, { useState } from "react";
-
 import "./TaskForm.css";
 import Tag from "./Tag";
+import { Task } from "./types";
 
-const TaskForm = ({ setTasks }) => {
-  const [taskData, setTaskData] = useState({
+interface TaskFormProps {
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+
+interface TaskData {
+  task: string;
+  status: string;
+  tags: string[];
+}
+
+const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
+  const [taskData, setTaskData] = useState<TaskData>({
     task: "",
     status: "todo",
     tags: [],
   });
 
-  const checkTag = (tag) => {
+  const checkTag = (tag: string): boolean => {
     return taskData.tags.some((item) => item === tag);
   };
 
-  const selectTag = (tag) => {
+  const selectTag = (tag: string) => {
     if (taskData.tags.some((item) => item === tag)) {
       const filterTags = taskData.tags.filter((item) => item !== tag);
       setTaskData((prev) => {
@@ -27,7 +37,7 @@ const TaskForm = ({ setTasks }) => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setTaskData((prev) => {
@@ -35,11 +45,16 @@ const TaskForm = ({ setTasks }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(taskData);
-    setTasks((prev) => {
-      return [...prev, taskData];
+    setTasks((prev: Task[]) => {
+      return [...prev, {
+        id: prev.length + 1, // Yangi ID ni hisoblash
+        title: taskData.task,
+        description: "", // Empty description
+        ...taskData // Qolgan ma'lumotlar
+      }];
     });
     setTaskData({
       task: "",
@@ -47,6 +62,8 @@ const TaskForm = ({ setTasks }) => {
       tags: [],
     });
   };
+  
+
   return (
     <header className="app_header">
       <form onSubmit={handleSubmit}>
