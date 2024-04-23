@@ -24,15 +24,17 @@ const App: React.FC = () => {
   };
 
   const onDrag = (status: string, position: number) => {
-    console.log(`${activeCard} is going to into ${status} and at the position ${position}`);
-    
+    console.log(
+      `${activeCard} is going to into ${status} and at the position ${position}`
+    );
+
     if (activeCard == null) return;
 
     const taskToMove = tasks[activeCard];
     const updateTasks = [...tasks.filter((_, index) => index !== activeCard)];
     updateTasks.splice(position, 0, {
       ...taskToMove,
-      status: status
+      status: status,
     });
 
     setTasks(updateTasks);

@@ -11,7 +11,13 @@ interface TaskCardProps {
   setActiveCard: (index: number | null) => void; // setActiveCard turi o'zgartirildi
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ title, tags, handleDelete, index, setActiveCard }) => {
+const TaskCard: React.FC<TaskCardProps> = ({
+  title,
+  tags,
+  handleDelete,
+  index,
+  setActiveCard,
+}) => {
   return (
     <article
       className="task_card"
@@ -24,7 +30,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, tags, handleDelete, index, s
       <div className="task_card_bottom_line">
         <div className="task_card_tags">
           {tags.map((tag, index) => (
-            <Tag key={index} tagName={tag} selectTag={() => {}} selected={false} />
+            <Tag key={index} tagName={tag} selectTag={() => {}} selected />
           ))}
         </div>
         <div className="task_delete" onClick={() => handleDelete(index)}>

@@ -37,7 +37,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     setTaskData((prev) => {
@@ -49,12 +51,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
     e.preventDefault();
     console.log(taskData);
     setTasks((prev: Task[]) => {
-      return [...prev, {
-        id: prev.length + 1, // Yangi ID ni hisoblash
-        title: taskData.task,
-        description: "", // Empty description
-        ...taskData // Qolgan ma'lumotlar
-      }];
+      return [
+        ...prev,
+        {
+          id: prev.length + 1,
+          title: taskData.task,
+          description: "",
+          ...taskData,
+        },
+      ];
     });
     setTaskData({
       task: "",
@@ -62,7 +67,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
       tags: [],
     });
   };
-  
 
   return (
     <header className="app_header">
